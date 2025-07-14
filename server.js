@@ -18,6 +18,11 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: err.message });
 });
 
+app.get("/", (req, res) => {
+
+    res.send("Welcome to gs image server")
+})
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 }); 
