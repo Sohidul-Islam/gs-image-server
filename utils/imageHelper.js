@@ -31,12 +31,16 @@ class ImageUploadHelper {
             const {
                 width = 800,        // Default width
                 height = null,      // Maintain aspect ratio by default
-                quality = 10,       // Default quality
+                quality = 60,       // Default quality
                 format = 'webp',    // Default format
             } = options;
 
+
+
+            const originalName = file?.originalname?.split(".")[0];
+
             // Create unique filename
-            const filename = `${uuidv4()}.${format}`;
+            const filename = `${originalName ? originalName : new Date().toString()}-${uuidv4()}.${format}`;
 
             // Ensure upload directory exists
             const uploadDir = path.join(process.cwd(), 'public', `uploads`);
