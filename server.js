@@ -10,18 +10,23 @@ const uploadRoute = require('./routes/upload');
 
 
 var whitelist = ['https://fashionglory-gaming.vercel.app', 'https://gs-admin-console.vercel.app']
-var corsOptions = {
-    origin: function (origin, callback) {
-        if (origin.includes("http://localhost")) {
-            callback(null, true)
-        }
-        else if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
+var corsOptionsDelegate = function (req, callback) {
+
+    const origin = req.header('Origin');
+    var corsOptions;
+    if (whitelist.indexOf(origin) !== -1) {
+        corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
     }
+    else if (origin?.includes("localhost")) {
+        corsOptions = { origin: true }
+    }
+    else {
+        corsOptions = { origin: false } // disable CORS for this request
+    }
+    callback(null, corsOptions) // callback expects two parameters: error and options
 }
+
+app.use(cors(corsOptionsDelegate))
 
 // Use routes
 app.use('/', uploadRoute);
