@@ -14,7 +14,7 @@ const uploadSingleImage = async (req, res, next) => {
             ImageUploadHelper.processAndSaveImage(req.file, {
                 width: 800,
                 format: 'png',
-                quality: 80,
+                quality: 20,
                 user: req?.user
             }),
             // Thumbnail (width 200px)
