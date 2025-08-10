@@ -26,7 +26,8 @@ var corsOptionsDelegate = function (req, callback) {
     callback(null, corsOptions) // callback expects two parameters: error and options
 }
 
-app.use(cors(corsOptionsDelegate))
+app.use(cors())
+// app.use(cors(corsOptionsDelegate))
 
 // Use routes
 app.use('/', uploadRoute);
